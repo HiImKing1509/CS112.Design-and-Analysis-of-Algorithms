@@ -23,11 +23,28 @@ using namespace std;
 #define sortD(v) sort(v.rbegin(), v.rend())
 #define pll pair<ll, ll>
 
-bool findPair(vector<pair<string, string>>&arr, string str1, string str2)
+bool findPairBinarySearch(vector<pair<string, string>>& arr, string str1, string str2)
 {
-    for (ll i = 0; i < arr.size(); i++)
-        if (arr[i].first == str1 && arr[i].second == str2)
-            return true;
+    ll left = 0;
+    ll right = arr.size() - 1;
+    while (left <= right)
+    {
+        ll mid = (left + right) / 2;
+
+        if (arr[mid].first == str1)
+        {
+            if (arr[mid].second == str2)
+                return true;
+            else if (arr[mid].second > str2)
+                right = mid - 1;
+            else
+                left = mid + 1;
+        }
+        else if (arr[mid].first > str1)
+            right = mid - 1;
+        else
+            left = mid + 1;
+    }
     return false;
 }
 
@@ -38,9 +55,11 @@ void SolveProblem()
     for (ll i = 0; i < n; i++)
         cin >> a[i].first >> a[i].second;
 
+    sortU(a);
+    //for (ll i = 0; i < n; i++) cout << a[i].first << " " << a[i].second << "\n";
     bool flag = true;
     for (ll i = 0; i < n; i++)
-        if (!findPair(a, a[i].second, a[i].first))
+        if (!findPairBinarySearch(a, a[i].second, a[i].first))
             flag = false;
     if (flag) cout << "TRUE";
     else cout << "FALSE";
