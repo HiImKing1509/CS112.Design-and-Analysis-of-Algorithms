@@ -90,7 +90,6 @@ void minimumWeightHamiltonianCycle(vector<vector<pair<pair<string, string>, ll>>
                 countLoop++;
 
         } while (next_permutation(vertex.begin(), vertex.end()) && countLoop <= 1000000);
-        //cout << min_path << "\n";
 }
 
 void SolveProblem()
